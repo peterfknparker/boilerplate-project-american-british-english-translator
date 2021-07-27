@@ -12,6 +12,10 @@ module.exports = function (app) {
 		if (!text) {
 			return res.json({ error: "Required field(s) missing" });
 		}
+
+		if (text === "") {
+			return res.json({ error: "No text to translate" });
+		}
 		if (!locale) {
 			return res.json({ error: "Required field(s) missing" });
 		}

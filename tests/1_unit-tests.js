@@ -232,7 +232,7 @@ suite("Unit Tests", () => {
 		assert.deepEqual(
 			translator.highlight({
 				translation: "Mangoes are my favourite fruit.",
-				highlight: "favourite",
+				highlight: ["favourite"],
 			}),
 			{
 				highlighted:
@@ -246,7 +246,7 @@ suite("Unit Tests", () => {
 		assert.deepEqual(
 			translator.highlight({
 				translation: "I ate yoghurt for breakfast.",
-				highlight: "yoghurt",
+				highlight: ["yoghurt"],
 			}),
 			{
 				highlighted:
@@ -260,7 +260,7 @@ suite("Unit Tests", () => {
 		assert.deepEqual(
 			translator.highlight({
 				translation: "We watched the soccer match for a while.",
-				highlight: "soccer",
+				highlight: ["soccer"],
 			}),
 			{
 				highlighted:
@@ -274,7 +274,7 @@ suite("Unit Tests", () => {
 		assert.deepEqual(
 			translator.highlight({
 				translation: "Tylenol takes up to an hour to work.",
-				highlight: "Tylenol",
+				highlight: ["Tylenol"],
 			}),
 			{
 				highlighted:

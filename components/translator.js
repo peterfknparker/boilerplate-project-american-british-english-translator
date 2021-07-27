@@ -11,109 +11,173 @@ class Translator {
 
 		if (locale === "american-to-british") {
 			Object.keys(americanToBritishSpelling).map((word) => {
-				let regex = new RegExp("\\b" + word + "\\b", "i");
-				let matchedWord = text.match(regex);
-				if (matchedWord) {
-					let textArray = text.split(matchedWord[0]);
-					textArray.splice(1, 0, americanToBritishSpelling[word]);
-					text = textArray.join("");
-					foundWord.push(americanToBritishSpelling[word]);
+				for (let i = 0; i < text.split(" ").length; i++) {
+					let regex = new RegExp("\\b" + word + "\\b", "i");
+					let matchedWord = text.match(regex);
+					if (matchedWord) {
+						let textArray0 = text.slice(0, matchedWord.index);
+						let textArray1 = text.slice(
+							matchedWord.index + matchedWord[0].length,
+							text.length
+						);
+						let replacedText = [textArray0, textArray1].join(
+							americanToBritishSpelling[word]
+						);
+						text = replacedText;
+						foundWord.push(americanToBritishSpelling[word]);
+					}
 				}
 			});
 
 			Object.keys(americanToBritishTitles).map((word) => {
-				let regex = new RegExp("\\b" + word.replace(".", "") + "\\b\\.", "i");
-				let matchedWord = text.match(regex);
-				if (matchedWord) {
-					let textArray = text.split(matchedWord[0]);
-					textArray.splice(
-						1,
-						0,
-						americanToBritishTitles[word][0].toUpperCase() +
-							americanToBritishTitles[word].substring(1)
-					);
-					text = textArray.join("");
-					foundWord.push(
-						americanToBritishTitles[word][0].toUpperCase() +
-							americanToBritishTitles[word].substring(1)
-					);
+				for (let i = 0; i < text.split(" ").length; i++) {
+					let regex = new RegExp("\\b" + word.replace(".", "") + "\\b\\.", "i");
+
+					let matchedWord = text.match(regex);
+					if (matchedWord) {
+						let textArray0 = text.slice(0, matchedWord.index);
+						let textArray1 = text.slice(
+							matchedWord.index + matchedWord[0].length,
+							text.length
+						);
+						let replacedText = [textArray0, textArray1].join(
+							americanToBritishTitles[word][0].toUpperCase() +
+								americanToBritishTitles[word].substring(1)
+						);
+
+						text = replacedText;
+						foundWord.push(
+							americanToBritishTitles[word][0].toUpperCase() +
+								americanToBritishTitles[word].substring(1)
+						);
+					}
 				}
 			});
 
 			Object.keys(americanOnly).map((word) => {
-				let regex = new RegExp("\\b" + word + "\\b", "i");
-				let matchedWord = text.match(regex);
-				if (matchedWord) {
-					let textArray = text.split(matchedWord[0]);
-					textArray.splice(1, 0, americanOnly[word]);
-					text = textArray.join("");
-					foundWord.push(americanOnly[word]);
+				for (let i = 0; i < text.split(" ").length; i++) {
+					let regex = new RegExp("\\b" + word + "\\b", "i");
+					let matchedWord = text.match(regex);
+					if (matchedWord) {
+						let textArray0 = text.slice(0, matchedWord.index);
+						let textArray1 = text.slice(
+							matchedWord.index + matchedWord[0].length,
+							text.length
+						);
+						let replacedText = [textArray0, textArray1].join(
+							americanOnly[word]
+						);
+						text = replacedText;
+						foundWord.push(americanOnly[word]);
+					}
 				}
 			});
 
 			let regex = new RegExp("\\d*\\d:\\d\\d");
-			let matchedTime = text.match(regex);
-			if (matchedTime) {
-				let textArray = text.split(matchedTime[0]);
-				textArray.splice(1, 0, matchedTime[0].replace(":", "."));
-				text = textArray.join("");
-				foundWord.push(matchedTime[0].replace(":", "."));
+			for (let i = 0; i < text.split(" ").length; i++) {
+				let matchedTime = text.match(regex);
+				if (matchedTime) {
+					let textArray0 = text.slice(0, matchedTime.index);
+					let textArray1 = text.slice(
+						matchedTime.index + matchedTime[0].length,
+						text.length
+					);
+					let replacedText = [textArray0, textArray1].join(
+						matchedTime[0].replace(":", ".")
+					);
+
+					text = replacedText;
+					foundWord.push(matchedTime[0].replace(":", "."));
+				}
 			}
 		}
 
 		// British to American translation logic below
 		if (locale === "british-to-american") {
 			for (let key in americanToBritishSpelling) {
-				let regex = new RegExp(
-					"\\b" + americanToBritishSpelling[key] + "\\b",
-					"i"
-				);
-				let matchedWord = text.match(regex);
-				if (matchedWord) {
-					let textArray = text.split(matchedWord[0]);
-					textArray.splice(1, 0, key);
-					text = textArray.join("");
-					foundWord.push(key);
+				for (let i = 0; i < text.split(" ").length; i++) {
+					let regex = new RegExp(
+						"\\b" + americanToBritishSpelling[key] + "\\b",
+						"i"
+					);
+					let matchedWord = text.match(regex);
+					if (matchedWord) {
+						let textArray0 = text.slice(0, matchedWord.index);
+						let textArray1 = text.slice(
+							matchedWord.index + matchedWord[0].length,
+							text.length
+						);
+						let replacedText = [textArray0, textArray1].join(key);
+						text = replacedText;
+
+						foundWord.push(key);
+					}
 				}
 			}
 
 			for (let key in americanToBritishTitles) {
-				let regex = new RegExp(
-					"\\b" + americanToBritishTitles[key] + "\\b",
-					"i"
-				);
-				let matchedWord = text.match(regex);
-				if (matchedWord) {
-					let textArray = text.split(matchedWord[0]);
-					textArray.splice(1, 0, key[0].toUpperCase() + key.substring(1));
-					text = textArray.join("");
-					foundWord.push(key[0].toUpperCase() + key.substring(1));
+				for (let i = 0; i < text.split(" ").length; i++) {
+					let regex = new RegExp(
+						"\\b" + americanToBritishTitles[key] + "\\b(?!\\.)",
+						"i"
+					);
+					let matchedWord = text.match(regex);
+					if (matchedWord) {
+						let textArray0 = text.slice(0, matchedWord.index);
+						let textArray1 = text.slice(
+							matchedWord.index + matchedWord[0].length,
+							text.length
+						);
+						let replacedText = [textArray0, textArray1].join(
+							key[0].toUpperCase() + key.substring(1)
+						);
+
+						text = replacedText;
+						foundWord.push(key[0].toUpperCase() + key.substring(1));
+					}
 				}
 			}
 
 			Object.keys(britishOnly).map((word) => {
-				let regex = new RegExp("\\b(?<!-)" + word + "(?!-)\\b", "i");
-				let matchedWord = text.match(regex);
-				if (matchedWord) {
-					let textArray = text.split(matchedWord[0]);
-					textArray.splice(1, 0, britishOnly[word]);
-					text = textArray.join("");
-					foundWord.push(britishOnly[word]);
+				for (let i = 0; i < text.split(" ").length; i++) {
+					let regex = new RegExp("\\b(?<!-)" + word + "(?!-)\\b", "i");
+					let matchedWord = text.match(regex);
+					if (matchedWord) {
+						let textArray0 = text.slice(0, matchedWord.index);
+						let textArray1 = text.slice(
+							matchedWord.index + matchedWord[0].length,
+							text.length
+						);
+						let replacedText = [textArray0, textArray1].join(britishOnly[word]);
+
+						text = replacedText;
+						foundWord.push(britishOnly[word]);
+					}
 				}
 			});
 
-			let regex = new RegExp("\\d*\\d\\.\\d\\d");
-			let matchedTime = text.match(regex);
-			if (matchedTime) {
-				let textArray = text.split(matchedTime[0]);
-				textArray.splice(1, 0, matchedTime[0].replace(".", ":"));
-				text = textArray.join("");
-				foundWord.push(matchedTime[0].replace(":", "."));
+			for (let i = 0; i < text.split(" ").length; i++) {
+				let regex = new RegExp("\\d*\\d\\.\\d\\d");
+				let matchedTime = text.match(regex);
+				if (matchedTime) {
+					let textArray0 = text.slice(0, matchedTime.index);
+					let textArray1 = text.slice(
+						matchedTime.index + matchedTime[0].length,
+						text.length
+					);
+					let replacedText = [textArray0, textArray1].join(
+						matchedTime[0].replace(".", ":")
+					);
+
+					text = replacedText;
+					foundWord.push(matchedTime[0].replace(".", ":"));
+				}
 			}
 		}
+		text = text[0].toUpperCase() + text.substring(1);
 
 		if (foundWord.length === 0) {
-			return { translation: "Everything looks good to me!" };
+			return { translation: "Everything looks good to me!", foundWord: [] };
 		}
 		if (!options) {
 			return { translation: text };
@@ -129,11 +193,40 @@ class Translator {
 
 	highlight(input) {
 		let { translation, highlight } = input;
-		let textArray = translation.split(highlight);
-		let highlightedString = textArray.join(
-			"<span class='highlight'>" + highlight + "</span>"
-		);
-		return { highlighted: highlightedString };
+
+		if (!highlight) {
+			return { translation: "Everything looks good to me!" };
+		}
+
+		let result = [];
+		console.log(highlight);
+
+		for (let i = 0; i < highlight.length; i++) {
+			let regex = new RegExp("\\b" + highlight[i].replace(".", "\\."), "i");
+			let matchedWord = translation.match(regex);
+			console.log(matchedWord);
+			console.log(translation, regex);
+			if (matchedWord) {
+				if (matchedWord.index > 0) {
+					let textBefore = translation.slice(0, matchedWord.index);
+					result.push(textBefore);
+				}
+				let highlightText = translation.slice(
+					matchedWord.index,
+					matchedWord.index + matchedWord[0].length
+				);
+
+				result.push("<span class='highlight'>" + highlightText + "</span>");
+
+				translation = translation.slice(
+					matchedWord.index + matchedWord[0].length,
+					translation.length
+				);
+			}
+			// arrayToTag.push()
+		}
+		result.push(translation);
+		return { highlighted: result.join("") };
 	}
 }
 
