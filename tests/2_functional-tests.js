@@ -70,7 +70,7 @@ suite("Functional Tests", () => {
         locale: "british-to-american",
       })
       .end(function (err, res) {
-        assert.deepEqual(res.body, { error: "Required field(s) missing" });
+        assert.deepEqual(res.body, { error: "No text to translate" });
         done();
       });
   });
